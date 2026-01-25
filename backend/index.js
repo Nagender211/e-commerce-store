@@ -2,13 +2,15 @@ import express from 'express'
 import dotenv from 'dotenv'
 import router from './routes/userRoute.js';
 import { dbConnection } from './dbconnection/dbConnection.js';
+import cookieParser from 'cookie-parser'
 dotenv.config()
 const app=express();
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 dbConnection()
-app.use(router)
+app.use(router);
 app.listen(process.env.PORT,()=>{
     console.log(`server is runnig in the port ${process.env.PORT}`)
 })
