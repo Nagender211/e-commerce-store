@@ -23,11 +23,15 @@ const userShcham=mongoose.Schema({
     expiretime: {
         type: Date
     },
-    optverified:{
-        type: String
+    emailotp:{
+        type: Number
+    },
+    emailotpexpire: {
+        type: Date
     },
     verified: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 })
 export default mongoose.model("User",userShcham)
