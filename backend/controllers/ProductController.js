@@ -89,3 +89,16 @@ export const getMyProducts=async(req,res)=>{
         console.log("error while getting the your products",error)
     }
 }
+
+export const deleteProduct=async(req,res)=>{
+    try {
+        const {id}=req.params;
+        const deleted=await Product.findByIdAndDelete(id);
+        // console.log()
+        res.status(401).json({
+            message: "prodocut is deleted"
+        })
+    } catch (error) {
+        console.log("error while deleteing the product",error)
+    }
+}
