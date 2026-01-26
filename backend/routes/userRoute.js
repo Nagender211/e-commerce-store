@@ -4,6 +4,8 @@ import { requireProtected } from '../middleware/auth.js'
 import { verifyEmailProtected } from '../middleware/verifyEmailMidd.js'
 import { createProducts, editProduct, getAllPost, getMyProducts, singelPost } from '../controllers/ProductController.js'
 import {upload} from '../utiles/uploads.js'
+import { createKyc } from '../controllers/kycController.js'
+import { kycapproved } from '../middleware/kycApproved.js'
 const router=express.Router()
 router.get('/',Testing)
 
@@ -28,6 +30,7 @@ router.get('/all-product',getAllPost);
 router.get('/inner-detailes/:id',singelPost);
 
 router.get('/my-products',requireProtected,verifyEmailProtected,getMyProducts)
+router.post('/kyc',requireProtected,verifyEmailProtected,upload.fields([ { name: "pancard", maxCount: 1 }, { name: "holderphoto", maxCount: 1 }, ]),createKyc)
 
 
 export default router;
