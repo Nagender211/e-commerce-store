@@ -105,12 +105,19 @@ export const forgotPassword = async (req,res) => {
         message: "user is not found please register",
       });
     }
+    
     const otpexpire = Date.now() + 10 * 60 * 1000;
     const otp = Math.floor(Math.random() * 900000 + 100000);
 
     user.otp = otp;
     user.expiretime = otpexpire;
     await user.save();
+             res.cookie("resetEmail", email, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 10 * 60 * 1000
+        });
     await sendEmail({
       to: user.email,
       subject: `OTP FOR THE PASSWORD REST`,
@@ -170,6 +177,10 @@ export const restPassword = async (req, res) => {
       message: "please enter the all the fieldes",
     });
   }
+  const email=req.cookies.resetEmail
+  if (!email) {
+            return res.status(400).json({ message: "Reset session expired" });
+            }
   const user = await User.findOne({ email });
   if (!user) {
     return res.status(404).json({
