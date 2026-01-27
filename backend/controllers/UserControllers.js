@@ -303,6 +303,12 @@ export const sendOtpVerification = async (req, res) => {
     user.emailotp = otp;
     user.emailotpexpire = exipreTime;
     await user.save();
+    res.cookie("verification", email, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 10 * 60 * 1000
+        });
     await sendEmail({
       to: user.email,
       subject: "Your verification otp code",
@@ -319,13 +325,14 @@ export const sendOtpVerification = async (req, res) => {
 
 export const confirmVerificationOtp = async (req,res) => {
   try {
-    const { emailotp,email } = req.body;
+    const { emailotp } = req.body;
     console.log("opt for emila",emailotp)
-    if (!emailotp || !email) {
+    if (!emailotp) {
       return res.status(404).json({
         message: "please enter your otp",
       });
     }
+    const email=req.cookies.verification
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({

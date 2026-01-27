@@ -1,7 +1,8 @@
 import { useState } from "react";
 import api from "../utiles/api";
+import { CookieUser } from "../utiles/authCookie";
 
-const OtpConform = () => {
+const OtpConform = ({setUser}: {setUser: React.Dispatch<any>}) => {
   const [otp,setOtp]=useState("");
   const [error,setError]=useState("")
   const email=localStorage.getItem("rest_email")
@@ -17,13 +18,13 @@ const OtpConform = () => {
       setError("Email missing. Please go back and enter your email again.");
       return;
     }
-      
       const res=await api.post("/confirm-otp",{otp: converted,email})
       console.log("hello worng",res)
       console.log(otp)
+      const userCookie=await CookieUser();
+      setUser(userCookie)
     } catch (error) {
       setError("Otp verification failed")
-      
     }
   }
   return (

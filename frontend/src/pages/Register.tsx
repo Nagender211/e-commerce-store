@@ -1,7 +1,8 @@
 import { useState } from "react";
 import api from "../utiles/api";
+import { CookieUser } from "../utiles/authCookie";
 
-const Register = () => {
+const Register = ({setUser}: {setUser: React.Dispatch<any>}) => {
   const [username,setUserName]=useState("")
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
@@ -25,6 +26,8 @@ const Register = () => {
     e.preventDefault()
     const res=await api.post("/register",{username,email,password,confirmpassword});
     console.log(res);
+    const userCokkie=await CookieUser();
+    setUser(userCokkie)
   }
   const handelpasswordshow=()=>{
     setShowPassword((prev)=>!prev)
