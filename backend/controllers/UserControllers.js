@@ -46,8 +46,7 @@ export const Register = async (req, res) => {
       password: hasshedpassword,
     });
     const token=sendCookie({id: user._id,email: user.email})
-    res.cookie('token in sinup',token,cookieOption)
-
+    res.cookie('token',token,cookieOption)
     res.status(201).json({
       message: "succesfully created user",
       data: user,
