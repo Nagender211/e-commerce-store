@@ -1,10 +1,13 @@
 import { useState } from "react";
 import api from "../utiles/api";
+import { CookieUser } from "../utiles/authCookie";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({setUser}: { setUser: React.Dispatch<any> }) => {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
-    const [showPassword,setShowPassword]=useState(false)
+    const [showPassword,setShowPassword]=useState(false);
+    const navigate=useNavigate()
     const handleEmail=(e: React.ChangeEvent<HTMLInputElement>)=>{
       setEmail(e.target.value)
       console.log(e.target.value)
@@ -21,8 +24,11 @@ const Login = () => {
         e.preventDefault();
         // console.log()
         const res=await api.post('/login',{email,password})
-        
         console.log("resposve from the login",res.data.data.email)
+        const checkAuth=await CookieUser();
+        setUser(checkAuth)
+      
+
     }
   return (
     <div>
