@@ -21,6 +21,7 @@ const Login = () => {
         e.preventDefault();
         // console.log()
         const res=await api.post('/login',{email,password})
+        
         console.log("resposve from the login",res.data.data.email)
     }
   return (
