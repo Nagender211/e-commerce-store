@@ -16,6 +16,9 @@ import { PublicRoute } from './protected/PublicRoute'
 import { useEffect, useState } from 'react'
 import { CookieUser } from './utiles/authCookie'
 import { PrivateRoute } from './protected/PrivateRoute'
+import CreateProduct from './pages/CreateProduct'
+import EditProduct from './pages/EditProduct'
+import InnerPageProduct from './pages/InnerPageProduct'
 
 function App() {
   const [user,setUser]=useState<any>(null)
@@ -41,17 +44,20 @@ function App() {
         <Route path='/forgot-password' element={<PublicRoute user={user} ><ForgotPassword setUser={setUser} /></PublicRoute>} />
         <Route path='/fortgot-otp' element={<PublicRoute user={user} ><OtpConform setUser={setUser} /></PublicRoute>} />
         <Route path='/reset-password' element={<PrivateRoute user={user} ><RestPassword setUser={setUser} /></PrivateRoute>} />
-        {/* <Route path='/email-conformtion' element={<PrivateRoute user={user} ><SendEmailVerify setUser={setUser} /></PrivateRoute>} /> */}
+        <Route path='/email-conformtion' element={<PrivateRoute user={user} ><SendEmailVerify setUser={setUser} /></PrivateRoute>} />
+        <Route path='/email-conformtion-otp' element={<PrivateRoute user={user} ><EmailVerifycationOtp setUser={setUser} /></PrivateRoute>} />
         {/* <Route path='/register' element={<Register />} /> */}
         {/* <Route path='/forgot-password' element={<ForgotPassword />} /> */}
         {/* <Route path='/fortgot-otp' element={<OtpConform />} /> */}
         {/* <Route path='/reset-password' element={<RestPassword />} /> */}
-        <Route path='/email-conformtion' element={<SendEmailVerify />} />
-        <Route path='/email-conformtion-otp' element={<EmailVerifycationOtp />} />
+        {/* <Route path='/email-conformtion' element={<SendEmailVerify />} /> */}
+        {/* <Route path='/email-conformtion-otp' element={<EmailVerifycationOtp />} /> */}
 
-
+        <Route path='/create-product' element={<CreateProduct />}/>
+        <Route path='/edit-product/:id' element={<EditProduct />}/>
         <Route path='/products' element={<AllProducts />} />
         <Route path='/my-products' element={<MyProducts />} />
+        <Route path='/product/:id' element={<InnerPageProduct />} />
       </Routes>
     </BrowserRouter>
     </>
