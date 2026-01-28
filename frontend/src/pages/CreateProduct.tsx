@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import api from "../utiles/api";
+import { useNavigate } from "react-router-dom";
+import { CookieUser } from "../utiles/authCookie";
 
 
 
@@ -13,9 +15,10 @@ import api from "../utiles/api";
 //     images: string[]
 // }
 
-const CreateProduct = () => {
+const CreateProduct = ({setUser}: {setUser: React.Dispatch<any>}) => {
     // const [products,setProducts]=useState<ProductsCreate[]>([])
     // const [productname,setProductname]
+    const navigate=useNavigate()
     const [productname,setProductname]=useState("");
     const [productdiscription,setProductdiscription]=useState("");
     const [productprice,setProductprice]=useState("");
@@ -67,8 +70,14 @@ const CreateProduct = () => {
               });
             const res=await api.post('/create-product',formData,{
               headers: { "Content-Type": "multipart/form-data" },
+              withCredentials: true,
             })
             console.log("product is creacted form frontend",res.data.data)
+            const userCookie=await CookieUser();
+            setUser(userCookie)
+            if(res.status===201){
+              navigate('/my-products')
+            }
             // setProducts(res.data.data)
         } catch (error) {
             

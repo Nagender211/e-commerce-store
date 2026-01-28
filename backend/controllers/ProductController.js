@@ -95,7 +95,7 @@ export const deleteProduct=async(req,res)=>{
         const {id}=req.params;
         const deleted=await Product.findByIdAndDelete(id);
         // console.log()
-        res.status(401).json({
+        res.status(200).json({
             message: "prodocut is deleted"
         })
     } catch (error) {
