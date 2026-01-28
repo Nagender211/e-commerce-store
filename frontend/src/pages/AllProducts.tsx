@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../utiles/api";
+import { Link } from "react-router-dom";
 
 
 type Products={
@@ -30,12 +31,14 @@ const AllProducts = () => {
       <h2>AllProducts</h2>
       {products.length===0 ? (<div><p>No prodcoust are avaiable here</p></div>): (<>{products.map((item)=>(
         <div key={item._id}>
-            <h4>{item.productname}</h4>
+           <Link to={`/product/${item._id}`}>
+               <h4>{item.productname}</h4>
             <p>{item.productname}</p>
             <p>{item.productprice}</p>
             <p>{item.productrating}</p>
             <p>{item.productcategory}</p>
             <img src={`${BASE_URL}${item.images[0]}`} alt="first image" />
+           </Link>
         </div>
       ))}</>)}
      
