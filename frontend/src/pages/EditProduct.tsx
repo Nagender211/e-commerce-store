@@ -4,18 +4,18 @@ import { useParams } from "react-router-dom";
 
 
 
-type ProductsCreate={
-    _id: number,
-    productname: string,
-    productdiscription: string,
-    productprice: number,
-    productrating: number,
-    productcategory: string,
-    images: string[]
-}
+// type ProductsCreate={
+//     _id: number,
+//     productname: string,
+//     productdiscription: string,
+//     productprice: number,
+//     productrating: number,
+//     productcategory: string,
+//     images: string[]
+// }
 
 const EditProduct = () => {
-    const [products,setProducts]=useState<ProductsCreate[]>([])
+    // const [products,setProducts]=useState<ProductsCreate[]>([])
     // const [productname,setProductname]
     const [productname,setProductname]=useState("");
     const [productdiscription,setProductdiscription]=useState("");

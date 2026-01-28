@@ -3,18 +3,18 @@ import api from "../utiles/api";
 
 
 
-type ProductsCreate={
-    _id: number,
-    productname: string,
-    productdiscription: string,
-    productprice: number,
-    productrating: number,
-    productcategory: string,
-    images: string[]
-}
+// type ProductsCreate={
+//     _id: number,
+//     productname: string,
+//     productdiscription: string,
+//     productprice: number,
+//     productrating: number,
+//     productcategory: string,
+//     images: string[]
+// }
 
 const CreateProduct = () => {
-    const [products,setProducts]=useState<ProductsCreate[]>([])
+    // const [products,setProducts]=useState<ProductsCreate[]>([])
     // const [productname,setProductname]
     const [productname,setProductname]=useState("");
     const [productdiscription,setProductdiscription]=useState("");
