@@ -25,15 +25,16 @@ function App() {
   useEffect(()=>{
     const userCookie=async()=>{
       const usercokkie=await CookieUser();
-      setUser(usercokkie)
+      setUser(usercokkie ?? null)
     };
     userCookie();
   },[])
 
   return (
     <>
-    <Header />
+    
     <BrowserRouter>
+    <Header />
       <Routes>
         <Route path='/' element={<Home />} />
 
@@ -43,9 +44,18 @@ function App() {
         <Route path='/register' element={<PublicRoute user={user} ><Register setUser={setUser} /></PublicRoute>} />
         <Route path='/forgot-password' element={<PublicRoute user={user} ><ForgotPassword setUser={setUser} /></PublicRoute>} />
         <Route path='/fortgot-otp' element={<PublicRoute user={user} ><OtpConform setUser={setUser} /></PublicRoute>} />
-        <Route path='/reset-password' element={<PrivateRoute user={user} ><RestPassword setUser={setUser} /></PrivateRoute>} />
+        <Route path='/reset-password' element={<PublicRoute user={user} ><RestPassword setUser={setUser} /></PublicRoute>} />
         <Route path='/email-conformtion' element={<PrivateRoute user={user} ><SendEmailVerify setUser={setUser} /></PrivateRoute>} />
         <Route path='/email-conformtion-otp' element={<PrivateRoute user={user} ><EmailVerifycationOtp setUser={setUser} /></PrivateRoute>} />
+
+        <Route path='/create-product' element={<PrivateRoute user={user} ><CreateProduct setUser={setUser} /></PrivateRoute>} />
+        
+        <Route path='/edit-product/:id' element={<PrivateRoute user={user} ><EditProduct setUser={setUser} /></PrivateRoute>} />
+
+        <Route path='/my-products' element={<PrivateRoute user={user} ><MyProducts setUser={setUser} /></PrivateRoute>} />
+
+
+
         {/* <Route path='/register' element={<Register />} /> */}
         {/* <Route path='/forgot-password' element={<ForgotPassword />} /> */}
         {/* <Route path='/fortgot-otp' element={<OtpConform />} /> */}
@@ -53,10 +63,10 @@ function App() {
         {/* <Route path='/email-conformtion' element={<SendEmailVerify />} /> */}
         {/* <Route path='/email-conformtion-otp' element={<EmailVerifycationOtp />} /> */}
 
-        <Route path='/create-product' element={<CreateProduct />}/>
-        <Route path='/edit-product/:id' element={<EditProduct />}/>
+        {/* <Route path='/create-product' element={<CreateProduct />}/> */}
+        {/* <Route path='/edit-product/:id' element={<EditProduct />}/> */}
         <Route path='/products' element={<AllProducts />} />
-        <Route path='/my-products' element={<MyProducts />} />
+        {/* <Route path='/my-products' element={<MyProducts />} /> */}
         <Route path='/product/:id' element={<InnerPageProduct />} />
       </Routes>
     </BrowserRouter>

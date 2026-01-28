@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../utiles/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { CookieUser } from "../utiles/authCookie";
 
 
 
@@ -14,9 +15,11 @@ import { useParams } from "react-router-dom";
 //     images: string[]
 // }
 
-const EditProduct = () => {
+const EditProduct = ({setUser}: {setUser: React.Dispatch<any>}) => {
     // const [products,setProducts]=useState<ProductsCreate[]>([])
     // const [productname,setProductname]
+    const {id}=useParams()
+    const navigate=useNavigate()
     const [productname,setProductname]=useState("");
     const [productdiscription,setProductdiscription]=useState("");
     const [productprice,setProductprice]=useState("");
@@ -38,6 +41,19 @@ const EditProduct = () => {
     const handleProductCategery=async(e: React.ChangeEvent<HTMLInputElement>)=>{
         setProductcategory(e.target.value)
     }
+    useEffect(()=>{
+        const fetecd=async()=>{
+            const res=await api.get(`/inner-detailes/${id}`)
+            console.log("res in edit page",res.data.data)
+            setProductname(res.data.data.productname || "")
+            setProductdiscription(res.data.data.productdiscription || "")
+            setProductprice(res.data.data.productprice || "")
+            setproductrating(res.data.data.productrating || "")
+            setProductcategory(res.data.data.productcategory || "")
+            setImages(res.data.data.images)
+        };
+        fetecd()
+    },[id])
     const handleProductImage=async(e: React.ChangeEvent<HTMLInputElement>)=>{
         const files=e.target.files;
         if(!files){
@@ -54,7 +70,7 @@ const EditProduct = () => {
 
     }
     const handelProduct=async(e: React.FormEvent<HTMLFormElement>)=>{
-        const {id}=useParams()
+        
         e.preventDefault();
         try {
           const formData = new FormData();
@@ -67,10 +83,15 @@ const EditProduct = () => {
           images.forEach((file) => {
                 formData.append("images", file);
               });
-            const res=await api.post(`/product/${id}`,formData,{
+            const res=await api.put(`/product/${id}`,formData,{
               headers: { "Content-Type": "multipart/form-data" },
             })
             console.log("product is creacted form frontend",res.data.data)
+            const userCookie=await CookieUser();
+            setUser(userCookie)
+                        if(res.status===201){
+              navigate('/my-products')
+            }
             // setProducts(res.data.data)
         } catch (error) {
             
