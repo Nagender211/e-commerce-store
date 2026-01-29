@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../utiles/api";
 import { CookieUser } from "../utiles/authCookie";
 
-const EmailVerifycationOtp = ({setUser}: {setUser: React.Dispatch<any>}) => {
+const EmailVerifycationOtp = () => {
   const [emailotp,setEmail]=useState('');
   const coverIng=Number(emailotp)
   const handleEmailOtp=(e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -13,8 +13,8 @@ const EmailVerifycationOtp = ({setUser}: {setUser: React.Dispatch<any>}) => {
     try {
       const res=await api.post("/confirm-email-otp",{emailotp: coverIng})
       console.log("otp verification",res)
-      const userCookie=await CookieUser();
-      setUser(userCookie)
+      // const userCookie=await CookieUser();
+      // setUser(userCookie)
     } catch (error) {
       console.log("error while generating the otp",error)
     }

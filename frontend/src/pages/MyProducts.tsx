@@ -15,7 +15,7 @@ type MyProdocuts={
 }
 
 
-const MyProducts = ({setUser}: {setUser: React.Dispatch<any>}) => {
+const MyProducts = () => {
   const navigate=useNavigate()
   const BASE_URL = "http://localhost:8080";
     const [myproducts,setMyProducts]=useState<MyProdocuts[]>([])
@@ -33,9 +33,10 @@ const MyProducts = ({setUser}: {setUser: React.Dispatch<any>}) => {
         const fetchedData=async()=>{
             const res=await api.get('/my-products',{ withCredentials: true });
             console.log("my-products data",res.data.data)
-            const userCookie=await CookieUser();
-            setUser(userCookie)
+            // const userCookie=await CookieUser();
+            // setUser(userCookie)
             setMyProducts(res.data.data)
+            console.log(myproducts.length)
         }
         fetchedData()
     },[])

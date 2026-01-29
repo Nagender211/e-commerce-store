@@ -15,7 +15,7 @@ import { CookieUser } from "../utiles/authCookie";
 //     images: string[]
 // }
 
-const EditProduct = ({setUser}: {setUser: React.Dispatch<any>}) => {
+const EditProduct = () => {
     // const [products,setProducts]=useState<ProductsCreate[]>([])
     // const [productname,setProductname]
     const {id}=useParams()
@@ -87,8 +87,8 @@ const EditProduct = ({setUser}: {setUser: React.Dispatch<any>}) => {
               headers: { "Content-Type": "multipart/form-data" },
             })
             console.log("product is creacted form frontend",res.data.data)
-            const userCookie=await CookieUser();
-            setUser(userCookie)
+            // const userCookie=await CookieUser();
+            // setUser(userCookie)
                         if(res.status===201){
               navigate('/my-products')
             }
