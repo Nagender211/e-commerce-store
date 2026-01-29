@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../utiles/api";
 import { CookieUser } from "../utiles/authCookie";
 
-const SendEmailVerify = ({setUser}: {setUser: React.Dispatch<any>}) => {
+const SendEmailVerify = () => {
   const [email,setEmail]=useState("")
   const handleEmailVerification=async(e: React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
@@ -10,8 +10,8 @@ const SendEmailVerify = ({setUser}: {setUser: React.Dispatch<any>}) => {
       const res=await api.post("/verify-email",{email})
       console.log("send verification",res)
       // console.log()
-      const userCookie=await CookieUser();
-      setUser(userCookie)
+      // const userCookie=await CookieUser();
+      // setUser(userCookie)
 
     } catch (error) {
       console.log("error while seind verification email",error)
