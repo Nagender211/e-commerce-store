@@ -70,7 +70,6 @@ const EditProduct = () => {
 
     }
     const handelProduct=async(e: React.FormEvent<HTMLFormElement>)=>{
-        
         e.preventDefault();
         try {
           const formData = new FormData();
@@ -89,25 +88,51 @@ const EditProduct = () => {
             console.log("product is creacted form frontend",res.data.data)
             // const userCookie=await CookieUser();
             // setUser(userCookie)
-                        if(res.status===201){
+            if(res.status===201){
               navigate('/my-products')
             }
-            // setProducts(res.data.data)
         } catch (error) {
-            
+            console.log("error while updating product", error)
         }
     }
   return (
-    <div>
-      <form onSubmit={handelProduct}>
-            <input placeholder="please enter the product title" value={productname} onChange={handleProductTitle}  />
-            <input placeholder="please enter the product productdiscription" value={productdiscription} onChange={handleProductDiscription}  />
-            <input placeholder="please enter the product productprice" value={productprice} onChange={handleProductPrice}  />
-            <input placeholder="please enter the product productrating" value={productrating} onChange={handleProductRating}  />
-            <input placeholder="please enter the product productcategory" value={productcategory} onChange={handleProductCategery}  />
-            <input type="file" multiple accept="image/*" onChange={handleProductImage}  />
-            <button type="submit">Create Product</button>
-      </form>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-2xl mx-auto px-4">
+        <div className="bg-white rounded-lg shadow-md p-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Edit Product</h2>
+          <form onSubmit={handelProduct} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Product Title</label>
+              <input placeholder="Enter product name" value={productname} onChange={handleProductTitle} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <input placeholder="Describe your product" value={productdiscription} onChange={handleProductDiscription} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Price (₹)</label>
+                <input placeholder="Enter price" value={productprice} onChange={handleProductPrice} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Rating (0-5)</label>
+                <input placeholder="Product rating" value={productrating} onChange={handleProductRating} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+              <input placeholder="e.g., Electronics, Fashion, Books" value={productcategory} onChange={handleProductCategery} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Product Images (Max 5)</label>
+              <input type="file" multiple accept="image/*" onChange={handleProductImage} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-100 file:text-blue-700 file:cursor-pointer" />
+            </div>
+            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors mt-6">
+              Update Product
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

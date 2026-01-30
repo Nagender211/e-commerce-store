@@ -19,6 +19,8 @@ import { PrivateRoute } from './protected/PrivateRoute'
 import CreateProduct from './pages/CreateProduct'
 import EditProduct from './pages/EditProduct'
 import InnerPageProduct from './pages/InnerPageProduct'
+import { Toaster } from "react-hot-toast";
+
 
 function App() {
   const [user,setUser]=useState<any>(null)
@@ -32,9 +34,9 @@ function App() {
 
   return (
     <>
-    
+    <Toaster reverseOrder={false} />
     <BrowserRouter>
-    <Header />
+    <Header user={user} setUser={setUser}/>
       <Routes>
         <Route path='/' element={<Home />} />
 
