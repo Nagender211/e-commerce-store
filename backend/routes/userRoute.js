@@ -6,6 +6,7 @@ import { createProducts, deleteProduct, editProduct, getAllPost, getMyProducts, 
 import {upload} from '../utiles/uploads.js'
 import { createKyc } from '../controllers/kycController.js'
 import { kycapproved } from '../middleware/kycApproved.js'
+import { createOrderInstace, verifyPayment } from '../controllers/PaymentController.js'
 const router=express.Router()
 router.get('/',Testing)
 
@@ -33,6 +34,10 @@ router.get('/my-products',requireProtected,verifyEmailProtected,getMyProducts)
 router.post('/kyc',requireProtected,verifyEmailProtected,upload.fields([ { name: "pancard", maxCount: 1 }, { name: "holderphoto", maxCount: 1 }, ]),createKyc)
 
 router.delete('/delete-product/:id',requireProtected,verifyEmailProtected,deleteProduct)
+
+
+router.post('/oders',requireProtected,createOrderInstace)
+router.post('/verify',requireProtected,verifyPayment)
 
 // 697623cc190f24d595292add
 // 69772f5fadb229b0884acff7

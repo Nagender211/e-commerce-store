@@ -23,19 +23,19 @@ export const Register = async (req, res) => {
   try {
     const { username, email, password, confirmpassword } = req.body;
     if (!username || !email || !password || !confirmpassword) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: "please enter the all the fields",
       });
     }
     if (password !== confirmpassword) {
-      return res.status(404).json({
-        message: "please match the password",
+      return res.status(400).json({
+        message: "Password is not matched",
       });
     }
     const exitinguser = await User.findOne({ email });
     if (exitinguser) {
       return res.status(409).json({
-        message: "user is already exists",
+        message: "User is already exists",
       });
     }
     const salt = 10;
@@ -63,20 +63,20 @@ export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: "please enter the all the fields",
       });
     }
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: "user is not found please register",
       });
     }
     const comparePassword = await bcrypt.compare(password, user.password);
     if (!comparePassword) {
-      return res.status(404).json({
-        message: "password is incrroct",
+      return res.status(400).json({
+        message: "password is incorrect",
       });
     }
     const token=sendCookie({id: user._id,email: user.email})
