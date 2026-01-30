@@ -32,8 +32,12 @@ const Header = ({user,setUser}: HeaderProp) => {
           <Link to={'/'}>
           <h2 className="text-2xl font-bold text-gray-900">ShopHub</h2>
           </Link>
-         {user ? <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">Logout</button>:  <Link to={'/login'}><button className="border px-4 py-4 rounded-xl font-semibold cursor-pointer">Login/singup</button></Link>}
+         <div>
+          {user ? <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">Logout</button>:  <Link to={'/login'}><button className="border px-4 py-4 rounded-xl font-semibold cursor-pointer">Login/singup</button></Link>}
+         <Link to={'/cart'}><button className="border px-4 py-4 rounded-xl font-semibold cursor-pointer">Cart</button></Link>
+         </div>
         </div>
+        
       </div>
     </header>
   );

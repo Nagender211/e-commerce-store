@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../utiles/api";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import toast, {Toaster} from "react-hot-toast";
+import CartPage from "./CartPage";
 
 declare global {
   interface Window {
@@ -12,6 +13,16 @@ declare global {
 
 type InnerProduct= {
     _id: number,
+    productname: string,
+    productdiscription: string,
+    productprice: number,
+    productrating: number,
+    productcategory: string,
+    images: string[]
+}
+
+type CartProduct= {
+    _id: string,
     productname: string,
     productdiscription: string,
     productprice: number,
@@ -37,10 +48,27 @@ type RazorpayResponse = {
 
 const InnerPageProduct = () => {
   const {id}=useParams();
+      const [count,setCount]=useState(1)
+
   const BASE_URL = "http://localhost:8080";
+  const navigate=useNavigate()
   const [error,setError]=useState("")
     const [innnerproduct,setInnnerproduct]=useState<InnerProduct | null>(null)
+    const [cartpage,setICartPage]=useState<InnerProduct | null>(null)
+    
 
+
+const handleDecre=()=>{
+        setCount((prev)=> prev>1 ?prev-1: 1)
+        
+
+    }
+    const handleIncre=()=>{
+        setCount((prev)=>prev+1)
+    }
+    if(count===-1){
+        setCount(1)
+    }
 
     const initiatePayment=(data: RazorpayOrderData)=>{
       const option={
@@ -63,12 +91,13 @@ const InnerPageProduct = () => {
       rp1.open()
     }
     const handleBuyNow=async()=>{
+      const totlaprice=innnerproduct ? innnerproduct.productprice*count : 0;
       if(!innnerproduct){
         alert('Product information not loaded')
         return
       }
       try {
-        const orderUrl=await api.post('/oders',{amount: innnerproduct.productprice})
+        const orderUrl=await api.post('/oders',{amount: totlaprice})
         if(orderUrl.status===200){
           initiatePayment(orderUrl.data.data)
         }
@@ -79,6 +108,29 @@ const InnerPageProduct = () => {
         
       }
     }
+   const handleCart=(id: any)=>{
+    console.log(id)
+    // const getOldCart=l
+    try {
+    const getOldItem=localStorage.getItem("cart_item")
+    const cartArr=getOldItem? JSON.parse(getOldItem) : [];
+
+    const checkItemAdd=cartArr.find((item: any)=> item._id===id)
+
+    if(checkItemAdd){
+      toast.error("prodct is aledey added")
+      return;
+    }
+    cartArr.push({...innnerproduct,count})
+    localStorage.setItem("cart_item",JSON.stringify(cartArr))
+    toast.success("Added succesfuly")
+    // navigate('/cart')
+    
+    } catch (error) {
+      toast.error("prodct is aledey added") 
+    }
+    
+   }
 
     useEffect(()=>{
       const fectedInnerProduct=async()=>{
@@ -127,11 +179,19 @@ const InnerPageProduct = () => {
               <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors text-lg" onClick={handleBuyNow} disabled={!innnerproduct}>
                 Buy Now
               </button>
+             <button className="border px-4 py-4 rounded-xl font-semibold cursor-pointer w-full" onClick={()=>handleCart(innnerproduct._id)}>Add To Cart</button>
+              <div className="flex flex-row">
+        <h1>Quantity:{count} </h1>
+        <button onClick={handleDecre}>-</button>
+        {/* <span>{count}</span> */}
+        <button onClick={handleIncre}>+</button>
+      </div>
               
             </div>
           </div>
         )}
         <Toaster />
+        {/* <CartPage item={innnerproduct} */}
       </div>
     </div>
   );
