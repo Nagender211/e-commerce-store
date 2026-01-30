@@ -20,6 +20,7 @@ import CreateProduct from './pages/CreateProduct'
 import EditProduct from './pages/EditProduct'
 import InnerPageProduct from './pages/InnerPageProduct'
 import { Toaster } from "react-hot-toast";
+import CartPage from './pages/CartPage'
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
     <Header user={user} setUser={setUser}/>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/cart' element={<CartPage />} />
 
         {/* login */}
 
