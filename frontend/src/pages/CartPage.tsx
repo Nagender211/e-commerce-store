@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
     const [products,setItem]=useState<any[]>([])
@@ -50,7 +51,9 @@ const CartPage = () => {
 
 
      
+      <Link to={'/checkout'}>
       <button>Checkout all the cart items</button>
+      </Link>
     </div>
   );
 };
